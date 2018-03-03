@@ -14,7 +14,7 @@ namespace Sources.Systems
         public void Initialize()
         {
             var entity = contexts.game.CreateEntity();
-            entity.AddHealth(100);
+///            entity.AddHealthUnit(100);
         }
     }
 }

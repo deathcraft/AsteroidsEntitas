@@ -9,15 +9,16 @@ namespace Sources.Systems
 
         public LogHealthSystem(Contexts contexts)
         {
-            entities = contexts.game.GetGroup(GameMatcher.Health);
+//            entities = contexts.game.GetGroup(GameMatcher.Health);
         }
 
         public void Execute()
         {
             foreach (var entity in entities)
             {
-                var healthValue = entity.health.value;
-                Debug.Log("Health: " + healthValue);
+                
+//                var healthValue = entity.HealthUnit.value;
+//                Debug.Log("Health: " + healthValue);
             }
         }
     }
