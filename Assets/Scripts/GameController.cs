@@ -3,20 +3,17 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    private LogHealthReactiveSystem system;
+    private CoreSystems coreSystems;
 
     void Start()
     {
         var contexts = Contexts.sharedInstance;
-
-        system = new LogHealthReactiveSystem(contexts);
-        var playerSystem = new CreatePlayerSystem(contexts);
-        playerSystem.Initialize();
+        coreSystems = new CoreSystems(contexts);
+        coreSystems.Initialize();
     }
-
 
     void Update()
     {
-        system.Execute();
+        coreSystems.Execute();
     }
 }

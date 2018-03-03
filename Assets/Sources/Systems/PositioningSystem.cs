@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using Entitas;
-using UnityEngine;
 
 namespace Sources.Systems
 {
-    public class LogHealthReactiveSystem : ReactiveSystem<GameEntity>
+    public class PositioningSystem : ReactiveSystem<GameEntity>
     {
-        public LogHealthReactiveSystem(Contexts contexts) : base(contexts.game)
+        public PositioningSystem(IContext<GameEntity> context) : base(context)
         {
         }
 
@@ -17,14 +16,14 @@ namespace Sources.Systems
 
         protected override bool Filter(GameEntity entity)
         {
-            return entity.hasHealth;
+            return entity.hasPosition && entity.hasGameObject;
         }
 
         protected override void Execute(List<GameEntity> entities)
         {
             foreach (var entity in entities)
             {
-                Debug.Log("Health: " + entity.health);
+                entity.gameObject.instance.transform.position = entity.position.value;
             }
         }
     }

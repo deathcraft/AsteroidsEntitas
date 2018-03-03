@@ -1,4 +1,6 @@
 ﻿using Entitas;
+using Entitas.Unity;
+using UnityEngine;
 
 namespace Sources.Systems
 {
@@ -14,7 +16,11 @@ namespace Sources.Systems
         public void Initialize()
         {
             var entity = contexts.game.CreateEntity();
-///            entity.AddHealthUnit(100);
+            entity.AddHealth(100);
+            entity.AddGameAsset("Ship");
+            entity.AddPosition(Vector3.zero);
+            entity.AddGameSpeed(0.025f);
+            entity.isPlayer = true;
         }
     }
 }
