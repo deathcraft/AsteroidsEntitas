@@ -23,7 +23,9 @@ namespace Sources.Systems
         {
             foreach (var entity in entities)
             {
-                entity.gameObject.instance.transform.position = entity.position.value;
+                var newPosition = entity.position.value;
+                
+                entity.gameObject.instance.transform.position = newPosition;
             }
         }
     }

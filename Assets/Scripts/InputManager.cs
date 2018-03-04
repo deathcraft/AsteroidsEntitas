@@ -1,44 +1,67 @@
-﻿using Entitas;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace DefaultNamespace
+public class InputManager : MonoBehaviour
 {
-    public class InputManager : MonoBehaviour
+
+    private bool changedInput;
+    private float rotation;
+    private float targetAcceleration;
+
+   
+    
+    
+    void Update()
     {
-        private Vector3 direction;
+        rotation = 0;
 
-        void Update()
+        //forward and backward
+        CheckMoveKeyPress(Vector3.up, PlayerConfiguration.INSTANCE.acceleration, KeyCode.UpArrow, KeyCode.W);
+//        CheckMoveKeyPress(Vector3.down, -acceleration, KeyCode.DownArrow, KeyCode.S);
+
+        CheckRotationKeyPress(PlayerConfiguration.INSTANCE.rotationSpeed, KeyCode.LeftArrow, KeyCode.A);
+        CheckRotationKeyPress(-PlayerConfiguration.INSTANCE.rotationSpeed, KeyCode.RightArrow, KeyCode.D);
+
+        if (changedInput)
         {
-            direction = Vector3.zero;
+            CreateInputEntity();
+        }
+    }
+
+    private void CheckMoveKeyPress(Vector3 input, float val, params KeyCode[] keyCodes)
+    {
+        foreach (var keyCode in keyCodes)
+        {
+            if (Input.GetKeyDown(keyCode))
+            {
+                targetAcceleration = val;
+                changedInput = true;
+            }
             
-            CheckKeyPress(Vector3.up, KeyCode.UpArrow, KeyCode.W);
-            CheckKeyPress(Vector3.left, KeyCode.LeftArrow, KeyCode.A);
-            CheckKeyPress(Vector3.down, KeyCode.DownArrow, KeyCode.S);
-            CheckKeyPress(Vector3.right, KeyCode.RightArrow, KeyCode.D);
-
-            if (direction != Vector3.zero)
+            if (Input.GetKeyUp(keyCode))
             {
-                CreateInputEntity();
+                targetAcceleration = 0f;
+                changedInput = true;
             }
         }
-
-        private void CheckKeyPress(Vector3 input, params KeyCode[] keyCodes)
+    }
+    
+    private void CheckRotationKeyPress(float angle, params KeyCode[] keyCodes)
+    {
+        foreach (var keyCode in keyCodes)
         {
-            foreach (var keyCode in keyCodes)
+            if (Input.GetKey(keyCode))
             {
-                if (Input.GetKey(keyCode))
-                {
-                    direction += input;
-                }
+                rotation += angle;
+                changedInput = true;
             }
         }
+    }
 
-        private void CreateInputEntity()
-        {
-            var contexts = Contexts.sharedInstance;
-            var inputEntity = contexts.input.CreateEntity();
-            var playerEntity = Contexts.sharedInstance.game.playerEntity;
-            inputEntity.AddInput(direction, playerEntity);
-        }            
+    private void CreateInputEntity()
+    {
+        var contexts = Contexts.sharedInstance;
+        var inputEntity = contexts.input.CreateEntity();
+        var playerEntity = Contexts.sharedInstance.game.playerEntity;
+        inputEntity.AddInput(targetAcceleration, rotation, playerEntity);
     }
 }

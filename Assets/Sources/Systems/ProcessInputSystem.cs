@@ -26,12 +26,8 @@ namespace Sources.Systems
             {
                 var inputEntity = entities[i];
                 var gameEntity = inputEntity.input.movedEntity;
-                var pos = gameEntity.position.value;
-                var speed = gameEntity.gameSpeed.value;
-                var dir = inputEntity.input.direction;
-                pos += dir * speed;
-
-                gameEntity.ReplacePosition(pos);
+                gameEntity.ReplaceAcceleration(inputEntity.input.acceleration);
+                gameEntity.ReplaceRotation(inputEntity.input.angle);
                 inputEntity.Destroy();
             }
         }

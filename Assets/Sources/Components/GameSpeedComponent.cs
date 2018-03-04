@@ -1,6 +1,8 @@
 ﻿using Entitas;
+using UnityEngine;
 
 public class GameSpeedComponent : IComponent
 {
-    public float value;
+    public Vector3 value;
+    public float maxValue;
 }

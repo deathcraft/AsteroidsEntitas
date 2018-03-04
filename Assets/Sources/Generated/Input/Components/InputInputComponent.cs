@@ -11,18 +11,20 @@ public partial class InputEntity {
     public InputComponent input { get { return (InputComponent)GetComponent(InputComponentsLookup.Input); } }
     public bool hasInput { get { return HasComponent(InputComponentsLookup.Input); } }
 
-    public void AddInput(UnityEngine.Vector3 newDirection, GameEntity newMovedEntity) {
+    public void AddInput(float newAcceleration, float newAngle, GameEntity newMovedEntity) {
         var index = InputComponentsLookup.Input;
         var component = CreateComponent<InputComponent>(index);
-        component.direction = newDirection;
+        component.acceleration = newAcceleration;
+        component.angle = newAngle;
         component.movedEntity = newMovedEntity;
         AddComponent(index, component);
     }
 
-    public void ReplaceInput(UnityEngine.Vector3 newDirection, GameEntity newMovedEntity) {
+    public void ReplaceInput(float newAcceleration, float newAngle, GameEntity newMovedEntity) {
         var index = InputComponentsLookup.Input;
         var component = CreateComponent<InputComponent>(index);
-        component.direction = newDirection;
+        component.acceleration = newAcceleration;
+        component.angle = newAngle;
         component.movedEntity = newMovedEntity;
         ReplaceComponent(index, component);
     }

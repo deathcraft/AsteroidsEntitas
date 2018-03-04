@@ -16,10 +16,12 @@ namespace Sources.Systems
         public void Initialize()
         {
             var entity = contexts.game.CreateEntity();
-            entity.AddHealth(100);
-            entity.AddGameAsset("Ship");
+            entity.AddHealth(PlayerConfiguration.INSTANCE.initialHealth);
+            entity.AddGameAsset(PlayerConfiguration.INSTANCE.assetPath);
             entity.AddPosition(Vector3.zero);
-            entity.AddGameSpeed(0.025f);
+            entity.AddGameSpeed(Vector3.zero, PlayerConfiguration.INSTANCE.maxSpeed);
+            entity.AddRotation(0f);
+            entity.AddAcceleration(0f);
             entity.isPlayer = true;
         }
     }

@@ -1,10 +1,10 @@
-﻿using DefaultNamespace;
-using Entitas;
+﻿using Entitas;
 using UnityEngine;
 
 [Input]
 public class InputComponent : IComponent
 {
-    public Vector3 direction;
+    public float acceleration;
+    public float angle;
     public GameEntity movedEntity;
 }
