@@ -24,10 +24,10 @@ namespace Sources.Systems
         public void Initialize()
         {
             var entity = contexts.game.CreateEntity();
-            entity.AddHealth(PlayerConfiguration.INSTANCE.initialHealth);
-            entity.AddGameAsset(PlayerConfiguration.INSTANCE.assetPath);
+            entity.AddHealth(GameConfiguration.INSTANCE.playerInitialHealth);
+            entity.AddGameAsset(GameConfiguration.INSTANCE.playerAssetPath);
             entity.AddPosition(Vector3.zero);
-            entity.AddGameSpeed(Vector3.zero, PlayerConfiguration.INSTANCE.maxSpeed);
+            entity.AddGameSpeed(Vector3.zero, GameConfiguration.INSTANCE.playerMaxSpeed);
             entity.AddRotation(0f);
             entity.AddAcceleration(0f);
             entity.isPlayer = true;

@@ -177,11 +177,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9bcec2434194699b52a73a2254df3a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  assetPath: Ship
-  maxSpeed: 9
-  acceleration: 9
-  rotationSpeed: 180
-  initialHealth: 100
+  playerAssetPath: Ship
+  playerMaxSpeed: 5
+  playerAcceleration: 5
+  playerRotationSpeed: 180
+  playerInitialHealth: 100
+  asteroidAssetPath: Asteroid
+  asteroidSpeedCoeff: 1
+  asteroidNum: 7
+  asteroidMinSize: 0.7
+  asteroidMaxSize: 1.5
 --- !u!1 &1894577341
 GameObject:
   m_ObjectHideFlags: 0

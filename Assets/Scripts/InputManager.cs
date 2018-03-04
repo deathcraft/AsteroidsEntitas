@@ -15,11 +15,11 @@ public class InputManager : MonoBehaviour
         rotation = 0;
 
         //forward and backward
-        CheckMoveKeyPress(Vector3.up, PlayerConfiguration.INSTANCE.acceleration, KeyCode.UpArrow, KeyCode.W);
+        CheckMoveKeyPress(Vector3.up, GameConfiguration.INSTANCE.playerAcceleration, KeyCode.UpArrow, KeyCode.W);
 //        CheckMoveKeyPress(Vector3.down, -acceleration, KeyCode.DownArrow, KeyCode.S);
 
-        CheckRotationKeyPress(PlayerConfiguration.INSTANCE.rotationSpeed, KeyCode.LeftArrow, KeyCode.A);
-        CheckRotationKeyPress(-PlayerConfiguration.INSTANCE.rotationSpeed, KeyCode.RightArrow, KeyCode.D);
+        CheckRotationKeyPress(GameConfiguration.INSTANCE.playerRotationSpeed, KeyCode.LeftArrow, KeyCode.A);
+        CheckRotationKeyPress(-GameConfiguration.INSTANCE.playerRotationSpeed, KeyCode.RightArrow, KeyCode.D);
 
         if (changedInput)
         {
