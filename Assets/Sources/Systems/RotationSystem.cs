@@ -25,7 +25,7 @@ namespace Sources.Systems
             foreach (var entity in entities)
             {
                 var transformRotation = entity.gameObject.instance.transform.rotation.eulerAngles;
-                transformRotation.z += entity.rotation.angle * Time.deltaTime;
+                transformRotation.z = entity.rotation.angle;
                 entity.gameObject.instance.transform.rotation = Quaternion.Euler(transformRotation);
             }
         }

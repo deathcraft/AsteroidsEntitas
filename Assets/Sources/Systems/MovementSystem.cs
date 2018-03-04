@@ -30,10 +30,5 @@ namespace Sources.Systems
                 entity.ReplacePosition(pos);
             }
         }
-
-        private static Vector3 GetWorldDirection(GameEntity entity, Vector3 localDirection)
-        {
-            return entity.gameObject.instance.transform.TransformDirection(localDirection).normalized;
-        }
     }
 }

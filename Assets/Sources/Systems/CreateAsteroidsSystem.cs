@@ -10,14 +10,42 @@ namespace Sources.Systems
         public CreateAsteroidsSystem(Contexts contexts)
         {
             this.contexts = contexts;
+            
+            var asteroidsInitGroup = contexts.game.GetGroup(GameMatcher.AllOf(GameMatcher.Asteroid, GameMatcher.AsteroidSize));
+            asteroidsInitGroup.OnEntityAdded += InitializeAsteroids;
+            
             var asteroidsGroup = contexts.game.GetGroup(GameMatcher.AllOf(GameMatcher.Asteroid, GameMatcher.GameObject, GameMatcher.AsteroidSize));
-            asteroidsGroup.OnEntityAdded += RandomizeLines;
+            asteroidsGroup.OnEntityAdded += InitializeLines;
         }
 
-        private void RandomizeLines(IGroup<GameEntity> @group, GameEntity entity, int index, IComponent component)
+        private void InitializeAsteroids(IGroup<GameEntity> @group, GameEntity asteroid, int index, IComponent component)
+        {
+            asteroid.AddGameAsset(GameConfiguration.INSTANCE.asteroidAssetPath);
+            
+            var initialSpeed = Random.insideUnitSphere * GameConfiguration.INSTANCE.asteroidSpeedCoeff;
+            initialSpeed.z = 0;
+            asteroid.AddGameSpeed(initialSpeed, 1f);
+            asteroid.AddRotation(0f);
+            asteroid.AddAcceleration(0);            
+        }
+
+        public void Initialize()
+        {
+            for (int i = 0; i < GameConfiguration.INSTANCE.asteroidNum; i++)
+            {
+                var asteroid = contexts.game.CreateEntity();
+                asteroid.isAsteroid = true;
+                asteroid.AddAsteroidSize(RandomAsteroidSize());
+                asteroid.AddPosition(RandomScreenPoistion());
+            }
+        }
+        
+        
+        private void InitializeLines(IGroup<GameEntity> @group, GameEntity entity, int index, IComponent component)
         {
             var instance = entity.gameObject.instance;
             var lineRenderer = instance.GetComponent<LineRenderer>();
+            entity.AddLineRenderer(lineRenderer);
 
             float angleStep = Mathf.PI / lineRenderer.positionCount * 2; 
             for (int i = 0; i < lineRenderer.positionCount; i++)
@@ -34,23 +62,6 @@ namespace Sources.Systems
         {
             return Random.Range(GameConfiguration.INSTANCE.asteroidMinSize,
                 GameConfiguration.INSTANCE.asteroidMaxSize);
-        }
-
-        public void Initialize()
-        {
-            for (int i = 0; i < GameConfiguration.INSTANCE.asteroidNum; i++)
-            {
-                var asteroid = contexts.game.CreateEntity();
-                asteroid.isAsteroid = true;
-                asteroid.AddGameAsset(GameConfiguration.INSTANCE.asteroidAssetPath);
-                asteroid.AddPosition(RandomScreenPoistion());
-                var initialSpeed = Random.insideUnitSphere * GameConfiguration.INSTANCE.asteroidSpeedCoeff;
-                initialSpeed.z = 0;
-                asteroid.AddGameSpeed(initialSpeed, 1f);
-                asteroid.AddRotation(0f);
-                asteroid.AddAcceleration(0);    
-                asteroid.AddAsteroidSize(RandomAsteroidSize());
-            }
         }
 
         private Vector3 RandomScreenPoistion()

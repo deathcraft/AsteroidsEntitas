@@ -28,4 +28,9 @@ public class GameConfiguration : MonoBehaviour
     public int asteroidNum = 5;
     public float asteroidMinSize = 1f;
     public float asteroidMaxSize = 2f;
+    public float asteroidSplitCoeff = 0.8f;
+    
+    public string bulletPath = "Bullet";
+    public float bulletSpeed = 2f;
+
 }

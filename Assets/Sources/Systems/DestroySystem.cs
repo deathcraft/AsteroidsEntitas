@@ -1,30 +1,33 @@
 ﻿using System.Collections.Generic;
 using Entitas;
+using Entitas.Unity;
 using UnityEngine;
 
 namespace Sources.Systems
 {
-    public class LogHealthReactiveSystem : ReactiveSystem<GameEntity>
+    public class DestroySystem : ReactiveSystem<GameEntity>
     {
-        public LogHealthReactiveSystem(Contexts contexts) : base(contexts.game)
+        public DestroySystem(IContext<GameEntity> context) : base(context)
         {
         }
 
         protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context)
         {
-            return context.CreateCollector(GameMatcher.Position);
+            return context.CreateCollector(GameMatcher.Destroyed.Added());
         }
 
         protected override bool Filter(GameEntity entity)
         {
-            return entity.hasHealth;
+            return entity.isDestroyed && entity.hasGameObject;
         }
 
         protected override void Execute(List<GameEntity> entities)
         {
             foreach (var entity in entities)
             {
-                Debug.Log("Health: " + entity.health);
+                entity.gameObject.instance.Unlink();
+                GameObject.Destroy(entity.gameObject.instance);
+                entity.Destroy();
             }
         }
     }

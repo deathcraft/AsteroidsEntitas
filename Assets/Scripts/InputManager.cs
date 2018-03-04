@@ -2,28 +2,58 @@
 
 public class InputManager : MonoBehaviour
 {
-
+    [SerializeField]
+    private GameObject deathDext;
+    
     private bool changedInput;
     private float rotation;
     private float targetAcceleration;
-
-   
-    
     
     void Update()
     {
-        rotation = 0;
+        Respawn();
+        ProcessPlayerInput();
+    }
 
-        //forward and backward
+    private void ProcessPlayerInput()
+    {
+        var contexts = Contexts.sharedInstance;
+        if (contexts.game.playerEntity == null)
+        {
+            return;
+        }
+
         CheckMoveKeyPress(Vector3.up, GameConfiguration.INSTANCE.playerAcceleration, KeyCode.UpArrow, KeyCode.W);
-//        CheckMoveKeyPress(Vector3.down, -acceleration, KeyCode.DownArrow, KeyCode.S);
-
         CheckRotationKeyPress(GameConfiguration.INSTANCE.playerRotationSpeed, KeyCode.LeftArrow, KeyCode.A);
         CheckRotationKeyPress(-GameConfiguration.INSTANCE.playerRotationSpeed, KeyCode.RightArrow, KeyCode.D);
 
         if (changedInput)
         {
             CreateInputEntity();
+        }
+
+        Shoot();
+    }
+
+    private void Respawn()
+    {
+        var contexts = Contexts.sharedInstance;
+        deathDext.SetActive(contexts.game.playerEntity == null);
+
+        if (contexts.game.playerEntity == null && Input.GetKeyDown(KeyCode.Space))
+        {
+            var newPlayer = contexts.game.CreateEntity();
+            newPlayer.isPlayer = true;
+        }
+    }
+
+    private void Shoot()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            var contexts = Contexts.sharedInstance;
+            var bulletEntity = contexts.game.CreateEntity();
+            bulletEntity.isBullet = true;
         }
     }
 
@@ -51,7 +81,10 @@ public class InputManager : MonoBehaviour
         {
             if (Input.GetKey(keyCode))
             {
-                rotation += angle;
+                var playerEntity = Contexts.sharedInstance.game.playerEntity;
+                var currentRotation = playerEntity.rotation.angle;
+                currentRotation += angle * Time.deltaTime;
+                rotation = currentRotation;
                 changedInput = true;
             }
         }
@@ -61,7 +94,10 @@ public class InputManager : MonoBehaviour
     {
         var contexts = Contexts.sharedInstance;
         var inputEntity = contexts.input.CreateEntity();
-        var playerEntity = Contexts.sharedInstance.game.playerEntity;
-        inputEntity.AddInput(targetAcceleration, rotation, playerEntity);
+        var playerEntity = contexts.game.playerEntity;
+        if (playerEntity != null)
+        {
+            inputEntity.AddInput(targetAcceleration, rotation, playerEntity);
+        }
     }
 }

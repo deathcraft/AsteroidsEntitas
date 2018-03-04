@@ -12,25 +12,31 @@ public static class GameComponentsLookup {
     public const int Asteroid = 1;
     public const int AsteroidSize = 2;
     public const int BoostEffect = 3;
-    public const int GameAsset = 4;
-    public const int GameObject = 5;
-    public const int GameSpeed = 6;
-    public const int Health = 7;
-    public const int Player = 8;
-    public const int Position = 9;
-    public const int Rotation = 10;
+    public const int Bullet = 4;
+    public const int Destroyed = 5;
+    public const int GameAsset = 6;
+    public const int GameObject = 7;
+    public const int GameSpeed = 8;
+    public const int Health = 9;
+    public const int LineRenderer = 10;
+    public const int Player = 11;
+    public const int Position = 12;
+    public const int Rotation = 13;
 
-    public const int TotalComponents = 11;
+    public const int TotalComponents = 14;
 
     public static readonly string[] componentNames = {
         "Acceleration",
         "Asteroid",
         "AsteroidSize",
         "BoostEffect",
+        "Bullet",
+        "Destroyed",
         "GameAsset",
         "GameObject",
         "GameSpeed",
         "Health",
+        "LineRenderer",
         "Player",
         "Position",
         "Rotation"
@@ -41,10 +47,13 @@ public static class GameComponentsLookup {
         typeof(AsteroidComponent),
         typeof(AsteroidSizeComponent),
         typeof(BoostEffectComponent),
+        typeof(BulletComponent),
+        typeof(DestroyedComponent),
         typeof(GameAssetComponent),
         typeof(GameObjectComponent),
         typeof(GameSpeedComponent),
         typeof(HealthComponent),
+        typeof(LineRendererComponent),
         typeof(PlayerComponent),
         typeof(PositionComponent),
         typeof(RotationComponent)
