@@ -178,8 +178,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetPath: Ship
-  maxSpeed: 5
-  acceleration: 5
+  maxSpeed: 9
+  acceleration: 9
   rotationSpeed: 180
   initialHealth: 100
 --- !u!1 &1894577341

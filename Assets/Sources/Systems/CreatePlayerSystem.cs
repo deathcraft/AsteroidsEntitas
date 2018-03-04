@@ -11,6 +11,14 @@ namespace Sources.Systems
         public CreatePlayerSystem(Contexts contexts)
         {
             this.contexts = contexts;
+
+            var instantiatiedPlayer = contexts.game.GetGroup(GameMatcher.AllOf(GameMatcher.Player, GameMatcher.GameObject));
+            instantiatiedPlayer.OnEntityAdded += OnPlayerInstantiated;
+        }
+
+        private void OnPlayerInstantiated(IGroup<GameEntity> @group, GameEntity entity, int index, IComponent component)
+        {
+            entity.AddBoostEffect(entity.gameObject.instance.GetComponent<ShipEffects>());
         }
 
         public void Initialize()
